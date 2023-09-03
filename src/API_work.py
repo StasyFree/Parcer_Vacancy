@@ -31,7 +31,7 @@ class HeadHunter(WorkApi):
         Получает список вакансий
         :return: list
         """
-        response = requests.get(self.url, params=self.__dict__)
+        response = requests.get(self.url)
         info = response.json()['items']
         return info
 
@@ -55,4 +55,3 @@ class SuperJob(WorkApi):
         response = requests.get(self.url, headers=self.API_KEY, params=self.__dict__)
         info = response.json()['objects']
         return info
-
