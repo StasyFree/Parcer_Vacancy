@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "parcer-vacancy"
+version = "0.1.0"
+description = ""
+authors = ["Анастасия <aburlakova45@gmail.com>"]
+readme = "README.md"
+packages = [{include = "parcer_vacancy"}]
+
+[tool.poetry.dependencies]
+python = "3.11"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
