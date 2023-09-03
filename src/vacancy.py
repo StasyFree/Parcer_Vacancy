@@ -1,12 +1,14 @@
 from abc import ABC, abstractmethod
 import datetime
 
+
 class Vacancies(ABC):
     """Абстрактный класс для вакансий"""
 
     @abstractmethod
     def __init__(self):
         pass
+
 
 class VacanciesHH(Vacancies):
     """Класс для работы с вакансиями HeadHunter"""
@@ -38,3 +40,31 @@ class VacanciesHH(Vacancies):
         data_format = datetime.datetime.strptime(data, '%Y-%m-%dT%H:%M:%S%z')
         return f"Дата создания вакансии: {datetime.datetime.strftime(data_format, '%d %B %Y %H:%M:%S %Z')}"
 
+
+class VacanciesSJ(Vacancies):
+    """Класс для работы с вакансиями SuperJob"""
+
+    def __init__(self, info):
+        self.url = info['link']
+        self.title = info['profession']
+        self.city = info['town']['title']
+        if info['payment_from'] == 0 and info['payment_to'] == 0:
+            self.salary_int = 0
+            self.salary = 'Зарплата не указана'
+        elif info['payment_from'] == 0:
+            self.salary_int = info['payment_to']
+            self.salary = f"Зарплата до {info['payment_to']} {info['currency']}"
+        else:
+            self.salary_int = info['payment_from']
+            self.salary = f"Зарплата от {info['payment_from']} {info['currency']}"
+        self.requirements = info['candidat']
+        self.date = self.date_convesion(info['date_published'])
+
+    @staticmethod
+    def date_convesion(data):
+        """
+        Конвертирует дату в читаемый вид
+        :param data: str
+        :return: str
+        """
+        return f"Дата создания вакансии: {datetime.datetime.fromtimestamp(data).strftime('%d %B %Y %H:%M:%S')}"
