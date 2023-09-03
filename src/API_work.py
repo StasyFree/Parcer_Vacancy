@@ -31,7 +31,7 @@ class HeadHunter(WorkApi):
         Получает список вакансий
         :return: list
         """
-        response = requests.get(self.url)
+        response = requests.get(self.url, params=self.__dict__)
         info = response.json()['items']
         return info
 
